@@ -46,34 +46,58 @@ int somasubmatriz(const Matriz& matriz, int linhaInicio, int linhaFim, int colun
     return soma;
 }
 
+int lerQuantosTestes(string pasta) {
+  namespace fs = std::filesystem;
+  int contador = 0;
+  for (const auto& entry : fs::directory_iterator(pasta)) {
+      if (entry.is_regular_file()) {
+          contador++;
+      }
+  }
+  return contador;
+}
+
+Matriz atribuirMatriz(string nomeArquivo) {
+  Matriz matriz;
+  ifstream arquivo(nomeArquivo);
+  arquivo >> matriz.linhas >> matriz.colunas;
+  matriz.dados.resize(matriz.linhas, vector<int>(matriz.colunas));
+  for (int i = 0; i < matriz.linhas; i++) {
+      for (int j = 0; j < matriz.colunas; j++) {
+          arquivo >> matriz.dados[i][j];
+      }
+    }
+  arquivo.close();
+  return matriz;
+}
+
 int main() {
 
-    ifstream arquivo("matriz_teste.txt");
-    // LE MATRIZ DO ARQUIVO
-    Matriz matriz;
-    arquivo >> matriz.linhas >> matriz.colunas;
-    matriz.dados.resize(matriz.linhas, vector<int>(matriz.colunas));
-    for (int i = 0; i < matriz.linhas; i++) {
-        for (int j = 0; j < matriz.colunas; j++) {
-            arquivo >> matriz.dados[i][j];
-        }
-    }
-    arquivo.close();
-    cout << "Matriz lida:\n";
-    printarMatriz(matriz);
+    //string nome = ("testes/5.txt");
+    //Matriz matriz = atribuirMatriz(nome);
+    //printarMatriz(matriz);
 
     
-    int intervalo = 2;
-    int linhaInicio = 0;
-    int linhaFim = linhaInicio + intervalo;
-    int colunaInicio = 0;
-    int colunaFim = colunaInicio + intervalo;
-    int soma = somasubmatriz(matriz, linhaInicio, linhaFim, colunaInicio, colunaFim);
-
-    cout << "Soma da submatriz de tamanho " << intervalo << "x" << intervalo << " = " << soma << "\n";
 
 
-    printarArqSubPasta("testes");
+
+    string pasta = "testes";
+    int numeroTestes = lerQuantosTestes(pasta);
+    cout << "Número de testes " << numeroTestes << endl;
+
+    for (int i = 0; i < numeroTestes; i++) {
+      string nomeArquivo = pasta + "/" + to_string(i+2) + ".txt";
+      Matriz matriz = atribuirMatriz(nomeArquivo);
+      //printarMatriz(matriz);
+      int intervalo = 2;
+      int linhaInicio = 0;
+      int linhaFim = linhaInicio + intervalo;
+      int colunaInicio = 0;
+      int colunaFim = colunaInicio + intervalo;
+      int soma = somasubmatriz(matriz, linhaInicio, linhaFim, colunaInicio, colunaFim);
+      cout << "Soma de " << nomeArquivo << " com intervalo de " << intervalo << " = " << soma << "\n";
+      //cout << "Lendo arquivo: " << nomeArquivo << endl;
+    }
 
     return 0;
 }
