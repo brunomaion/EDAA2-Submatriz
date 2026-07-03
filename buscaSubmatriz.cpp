@@ -33,10 +33,10 @@ void printarMatriz(const Matriz& matriz) {
     }
 }
 
-int somasubmatriz(const Matriz& matriz, int linhaInicio, int colunaInicio, int dimensao) {
+int somasubmatriz(const Matriz& matriz, int linhaInicio, int colunaInicio, int ordem) {
     int soma = 0;
-    int linhaFim = linhaInicio + dimensao;
-    int colunaFim = colunaInicio + dimensao;
+    int linhaFim = linhaInicio + ordem;
+    int colunaFim = colunaInicio + ordem;
     for (int i = linhaInicio; i < linhaFim; i++) {
         for (int j = colunaInicio; j < colunaFim; j++) {
           int elemento = matriz.dados[i][j];
@@ -74,43 +74,43 @@ Matriz atribuirMatriz(string nomeArquivo) {
 }
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    int execucao = atoi(argv[1]);
 
-    //string nome = ("testes/5.txt");
-    //Matriz matriz = atribuirMatriz(nome);
-    //printarMatriz(matriz);
     string pasta = "testes";
     int numeroTestes = lerQuantosTestes(pasta);
-    //cout << "Número de testes " << numeroTestes << endl;
-
     for (int i = 0; i < numeroTestes; i++) {
+      float tempoInicio = clock();
+
       string nomeArquivo = pasta + "/" + to_string(i+2) + ".txt";
-      cout << "\nTestes do arquivo " << nomeArquivo << endl;
+      //cout << "\nTestes do arquivo " << nomeArquivo << endl;
       Matriz matriz = atribuirMatriz(nomeArquivo);
       //printarMatriz(matriz);
       int m=matriz.linhas;
       int submatrizes = 0;
       int menorSomaGlobal = somasubmatriz(matriz, 0, 0, m);
       int indiceI, indiceJ = m;
-      int dimensaoMenorSoma = m;
-      cout << "Menor soma global incial: " << menorSomaGlobal << endl;
+      int ordemMenorSoma = m;
+      //cout << "Menor soma global incial: " << menorSomaGlobal << endl;
 
-      for (int dimensao=2; dimensao<=m; dimensao++) { //ESSE FOR VAI ATE O MAX DE MxN
-        for (int linhaInicio=0; linhaInicio<=m-dimensao; linhaInicio++) {
-          for (int colunaInicio=0; colunaInicio<=m-dimensao; colunaInicio++) {
-            int somaSubmatriz = somasubmatriz(matriz, linhaInicio, colunaInicio, dimensao);
+      for (int ordem=2; ordem<=m; ordem++) { //ESSE FOR VAI ATE O MAX DE MxN
+        for (int linhaInicio=0; linhaInicio<=m-ordem; linhaInicio++) {
+          for (int colunaInicio=0; colunaInicio<=m-ordem; colunaInicio++) {
+            int somaSubmatriz = somasubmatriz(matriz, linhaInicio, colunaInicio, ordem);
             if (somaSubmatriz <= menorSomaGlobal) {
               menorSomaGlobal = somaSubmatriz;
               indiceI = linhaInicio;
               indiceJ = colunaInicio;
-              dimensaoMenorSoma = dimensao;
+              ordemMenorSoma = ordem;
             }
             submatrizes++;
           }
         }
       }
-      cout << "Menor soma global final: " << menorSomaGlobal << endl;
-      cout << "Número de submatrizes percorridas: " << submatrizes << endl;
+      float tempoFim = clock();
+      float tempoTotal = (tempoFim - tempoInicio) / CLOCKS_PER_SEC;
+
+      cout << execucao << "," << m << "," << menorSomaGlobal << "," << indiceI << "," << indiceJ << "," << ordemMenorSoma << "," << submatrizes << "," << tempoTotal << endl;
     }
 
     return 0;

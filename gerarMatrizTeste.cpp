@@ -37,7 +37,7 @@ void criarMatrizTxt(int n) {
       arquivo << "\n";
   }
   arquivo.close();
-  cout << nomeArquivo << " criado com sucesso." << endl;
+  //cout << nomeArquivo << " criado com sucesso." << endl;
 }
 
 int main(int argc, char* argv[]) {
