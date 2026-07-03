@@ -23,6 +23,19 @@ void printarMatriz(const Matriz& matriz) {
     }
 }
 
+int somasubmatriz(const Matriz& matriz, int linhaInicio, int linhaFim, int colunaInicio, int colunaFim) {
+    int soma = 0;
+    for (int i = linhaInicio; i < linhaFim; i++) {
+        for (int j = colunaInicio; j < colunaFim; j++) {
+          int elemento = matriz.dados[i][j];
+          //printf("Elemento [%d][%d] = %d\n", i, j, elemento);
+          soma += elemento;
+        }
+    }
+    //printf("Soma da submatriz: %d\n", soma);
+    return soma;
+}
+
 int main() {
 
     ifstream arquivo("matriz_teste.txt");
@@ -38,6 +51,16 @@ int main() {
     arquivo.close();
     cout << "Matriz lida:\n";
     printarMatriz(matriz);
+
+    
+    int intervalo = 2;
+    int linhaInicio = 0;
+    int linhaFim = linhaInicio + intervalo;
+    int colunaInicio = 0;
+    int colunaFim = colunaInicio + intervalo;
+    int soma = somasubmatriz(matriz, linhaInicio, linhaFim, colunaInicio, colunaFim);
+
+    cout << "Soma da submatriz de tamanho " << intervalo << "x" << intervalo << " = " << soma << "\n";
 
     return 0;
 }
