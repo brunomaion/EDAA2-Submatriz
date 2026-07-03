@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <filesystem>
 
 using namespace std;
 
@@ -12,6 +13,15 @@ struct Matriz {
     int colunas;
     vector<vector<int>> dados;
 };
+
+void printarArqSubPasta(string nomePasta) {
+    namespace fs = std::filesystem;
+    for (const auto& entry : fs::directory_iterator(nomePasta)) {
+      if (entry.is_regular_file()) {
+          cout << entry.path().filename().string() << endl;
+      }
+    }
+}
 
 void printarMatriz(const Matriz& matriz) {
 
@@ -61,6 +71,9 @@ int main() {
     int soma = somasubmatriz(matriz, linhaInicio, linhaFim, colunaInicio, colunaFim);
 
     cout << "Soma da submatriz de tamanho " << intervalo << "x" << intervalo << " = " << soma << "\n";
+
+
+    printarArqSubPasta("testes");
 
     return 0;
 }
