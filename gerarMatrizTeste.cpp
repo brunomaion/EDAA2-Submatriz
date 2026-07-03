@@ -25,7 +25,12 @@ void criarMatrizTxt(int n) {
   int k = 0;
   for (int i = 0; i < n; i++) {
       for (int j = 0; j < n; j++) {
-          arquivo << numeros[k++];
+
+          int boolean = rand() % 2;
+          if (boolean == 0)
+              arquivo << numeros[k++];
+          else
+              arquivo << -numeros[k++];
           if (j != n - 1)
               arquivo << " ";
       }
