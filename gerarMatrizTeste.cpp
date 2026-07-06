@@ -42,7 +42,7 @@ void criarMatrizTxt(int n) {
 
 int main(int argc, char* argv[]) {
   int numeroTestes = atoi(argv[1]);
-  for (int i = 2; i <= numeroTestes; i++) {
+  for (int i = 1; i <= numeroTestes; i++) {
     criarMatrizTxt(i);
   }
   return 0;
