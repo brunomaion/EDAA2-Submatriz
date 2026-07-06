@@ -36,9 +36,9 @@ void printarMatriz(const Matriz& matriz) {
 int somasubmatriz(const Matriz& matriz,int linhaInicio,int colunaInicio,int altura,int largura) {
   int soma = 0;
   for (int i = linhaInicio; i < linhaInicio + altura; i++) {
-      for (int j = colunaInicio; j < colunaInicio + largura; j++) {
-          soma += matriz.dados[i][j];
-      }
+    for (int j = colunaInicio; j < colunaInicio + largura; j++) {
+        soma += matriz.dados[i][j];
+    }
   }
   return soma;
 }
@@ -82,8 +82,7 @@ int main(int argc, char* argv[]) {
     int colunas = matriz.colunas;
     int submatrizes = 0;
     // Inicializa com a matriz inteira
-    int menorSomaGlobal =
-        somasubmatriz(matriz, 0, 0, linhas, colunas);
+    int menorSomaGlobal = somasubmatriz(matriz, 0, 0, linhas, colunas);
 
     int indiceI = 0;
     int indiceJ = 0;
@@ -91,7 +90,7 @@ int main(int argc, char* argv[]) {
     int alturaMenor = linhas;
     int larguraMenor = colunas;
 
-    // Percorre dimensões possíveis
+    // Percorre dimensões 
     for (int altura = 1; altura <= linhas; altura++) {
       for (int largura = 1; largura <= colunas; largura++) {
         // Percorre as posições
@@ -106,8 +105,8 @@ int main(int argc, char* argv[]) {
               larguraMenor = largura;
             }
             submatrizes++;
-            }
           }
+        }
       }
     }
 
